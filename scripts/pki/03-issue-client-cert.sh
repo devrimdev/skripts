@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# Prometheus mTLS-Client-Zertifikat ausstellen
+# Prometheus mTLS-Client-Zertifikat ausstellen (ausführlich dokumentiert)
+# Dieses Skript erzeugt einen Client-Key/CSR und signiert ihn mit der CA;
+# vorgesehen für Prometheus als mTLS-Client-Identity.
 set -euo pipefail
 umask 077
 
@@ -14,7 +16,7 @@ CSR="${CLIENT_NAME}.csr"
 CRT="${CLIENT_NAME}.crt"
 EXT="${CLIENT_NAME}_ext.cnf"
 
-# CA muss vorhanden sein
+# CA vorhanden prüfen
 if [[ ! -f "$CA_KEY" || ! -f "$CA_CRT" ]]; then
   echo "Fehler: $CA_KEY oder $CA_CRT nicht gefunden." >&2
   echo "Zuerst 01-create-ca.sh ausführen." >&2
@@ -30,9 +32,10 @@ openssl req -new \
   -subj "/CN=${CLIENT_CN}" \
   -out "$CSR"
 
-# Erweiterungen für Client-Zertifikat schreiben
+# OpenSSL-Erweiterungen für Client-Zertifikat
 cat > "$EXT" <<EOF
 [ v3_client ]
+basicConstraints = critical, CA:FALSE
 subjectAltName = DNS:${CLIENT_CN}
 keyUsage = critical, digitalSignature
 extendedKeyUsage = clientAuth
