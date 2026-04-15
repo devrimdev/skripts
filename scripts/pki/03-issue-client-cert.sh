@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Prometheus mTLS-Client-Zertifikat ausstellen (ausführlich dokumentiert)
+# Prometheus mTLS-Client-Zertifikat ausstellen 
 # Dieses Skript erzeugt einen Client-Key/CSR und signiert ihn mit der CA;
 # vorgesehen für Prometheus als mTLS-Client-Identity.
 set -euo pipefail

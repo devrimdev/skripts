@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Server-Zertifikate für alle Hosts ausstellen (ausführlich dokumentiert)
+# Server-Zertifikate für alle Hosts ausstellen
 # Dieses Skript läuft auf der PKI-VM und erzeugt für jede Host-Identität
 # einen privaten Schlüssel, einen CSR und signiert diesen mit der lokalen CA.
 set -euo pipefail
